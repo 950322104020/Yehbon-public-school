@@ -45,7 +45,7 @@ export default function HomePage() {
       
       {/* 1. HERO SECTION */}
       <section className="relative h-[85vh] w-full flex items-center justify-center bg-slate-900 text-white overflow-hidden">
-        <div className="absolute inset-0 z-0 bg-[url('https://images.unsplash.com/photo-1546410531-bb4caa6b424d?auto=format&fit=crop&q=80&w=1920')] bg-cover bg-center opacity-40"></div>
+        <div className="absolute inset-0 z-0 bg-[url('https://i.postimg.cc/3rgxdLsQ/Yehbon.jpg')] bg-cover bg-center opacity-40"></div>
         <div className="relative z-10 max-w-5xl mx-auto text-center px-4 space-y-6">
           <span className="bg-amber-500 text-slate-900 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest shadow">
             Admissions Open 2026-2027
@@ -134,7 +134,7 @@ export default function HomePage() {
             <div className="relative group max-w-xs">
               <div className="absolute inset-0 bg-amber-500 rounded-2xl transform rotate-3 group-hover:rotate-6 transition-transform shadow-md"></div>
               <img 
-                src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=600" 
+                src="https://i.postimg.cc/cJN38KFf/Terry-sir.jpg" 
                 alt="Principal" 
                 className="relative z-10 rounded-2xl object-cover shadow-md aspect-[4/5]" 
               />
@@ -147,7 +147,7 @@ export default function HomePage() {
               "At Yehbon Public School, we believe that text documents alone do not forge leaders. True education happens when curiosity is backed by high-tier equipment, and character development is prioritized right alongside standard evaluations."
             </p>
             <div>
-              <h4 className="font-bold text-slate-900 text-lg">Dr.Anaya Saini</h4>
+              <h4 className="font-bold text-slate-900 text-lg">MR.Terry Mize</h4>
               <p className="text-xs font-semibold text-amber-600 uppercase tracking-widest">Principal & Academic Chair, Ph.D. Education</p>
             </div>
           </div>
