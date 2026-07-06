@@ -1,11 +1,11 @@
 import axios from 'axios';
 
 const api = axios.create({
-  // Clean off the trailing /api route since components define it explicitly
-  baseURL: 'http://localhost:5000',
+  // Automatically detects if there's a live cloud variable, otherwise falls back to local testing
+  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000',
 });
 
-// Automatically inject JWT token into header request parameters
+// Auto-inject JWT security token into outgoing headers
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('adminToken');
   if (token) {
