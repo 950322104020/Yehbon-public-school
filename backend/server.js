@@ -8,8 +8,35 @@ dns.setServers(["1.1.1.1","8.8.8.8"]);
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+const allowedOrigins = [
+  process.env.FRONTEND_URL,
+  process.env.DASHBOARD_URL,
+  'http://localhost:3000',
+  'http://localhost:5173'
+];
+
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: function (origin, callback) {
+    // Allow server-to-server requests or local tools (like Postman)
+    if (!origin) return callback(null, true);
+
+    // Allow explicit whitelisted URLs
+    const isWhitelisted = allowedOrigins.indexOf(origin) !== -1;
+
+    // Allow standard or deep Vercel project subdomains
+    const isVercelDomain = origin.endsWith('.vercel.app') || origin.includes('.vercel.app');
+
+    if (isWhitelisted || isVercelDomain) {
+      callback(null, true);
+    } else {
+      callback(new Error('Blocked by security CORS policy'));
+    }
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 app.use(express.json());
 
 // Database Connection
@@ -32,34 +59,3 @@ app.get('/', (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
-
-
-
-const allowedOrigins = [
-  process.env.FRONTEND_URL,
-  process.env.DASHBOARD_URL,
-  'http://localhost:3000',
-  'http://localhost:5173'
-];
-
-app.use(cors({
-  origin: function (origin, callback) {
-    // 1. Allow server-to-server requests or local tools (like Postman)
-    if (!origin) return callback(null, true);
-    
-    // 2. Check if the origin matches explicit whitelisted URLs
-    const isWhitelisted = allowedOrigins.indexOf(origin) !== -1;
-    
-    // 3. Check if the origin is any standard or deep Vercel project subdomain
-    const isVercelDomain = origin.endsWith('.vercel.app') || origin.includes('.vercel.app');
-
-    if (isWhitelisted || isVercelDomain) {
-      callback(null, true);
-    } else {
-      callback(new Error('Blocked by security CORS policy'));
-    }
-  },
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
-}));
