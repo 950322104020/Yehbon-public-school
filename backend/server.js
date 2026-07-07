@@ -17,24 +17,8 @@ const allowedOrigins = [
 ];
 
 const corsOptions = {
-  origin: function (origin, callback) {
-    const requestOrigin = origin || '';
-
-    // Allow server-to-server requests or local tools (like Postman)
-    if (!requestOrigin) return callback(null, true);
-
-    // Allow explicit whitelisted URLs
-    const isWhitelisted = allowedOrigins.indexOf(requestOrigin) !== -1;
-
-    // Allow standard or deep Vercel project subdomains
-    const isVercelDomain = requestOrigin.endsWith('.vercel.app') || requestOrigin.includes('.vercel.app');
-
-    if (isWhitelisted || isVercelDomain) {
-      callback(null, true);
-    } else {
-      callback(new Error('Blocked by security CORS policy'));
-    }
-  },
+  // Dynamically mirrors the incoming request's origin (perfect for handling dynamic Vercel URLs)
+  origin: true, 
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
