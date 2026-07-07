@@ -37,31 +37,51 @@ const [eventForm, setEventForm] = useState({ title: '', description: '', eventDa
   // Mutators: Create items [cite: 8]
   const addNotice = async (e) => {
     e.preventDefault();
-    await api.post('/api/notices', noticeForm);
-    setNoticeForm({ title: '', content: '', category: 'General' });
-    fetchData();
+    try {
+      await api.post('/api/notices', noticeForm);
+      setNoticeForm({ title: '', content: '', category: 'General' });
+      fetchData();
+    } catch (err) {
+      console.error('Failed to publish notice:', err);
+      alert('Unable to publish notice. Please try again.');
+    }
   };
 
   const addGallery = async (e) => {
     e.preventDefault();
-    await api.post('/api/gallery', galleryForm);
-    setGalleryForm({ imageUrl: '', caption: '', category: 'Campus' });
-    fetchData();
+    try {
+      await api.post('/api/gallery', galleryForm);
+      setGalleryForm({ imageUrl: '', caption: '', category: 'Campus' });
+      fetchData();
+    } catch (err) {
+      console.error('Failed to add gallery image:', err);
+      alert('Unable to add gallery image. Please try again.');
+    }
   };
 
   // Mutators: Delete items [cite: 8]
   const deleteItem = async (route, id) => {
-    if (confirm("Confirm deletion process?")) {
+    if (!confirm('Confirm deletion process?')) return;
+
+    try {
       await api.delete(`/api/${route}/${id}`);
       fetchData();
+    } catch (err) {
+      console.error(`Failed to delete ${route} item:`, err);
+      alert('Unable to delete item. Please try again.');
     }
   };
 
   const addEvent = async (e) => {
     e.preventDefault();
-    await api.post('/api/events', eventForm);
-    setEventForm({ title: '', description: '', eventDate: '', location: '' });
-    fetchData();
+    try {
+      await api.post('/api/events', eventForm);
+      setEventForm({ title: '', description: '', eventDate: '', location: '' });
+      fetchData();
+    } catch (err) {
+      console.error('Failed to create event:', err);
+      alert('Unable to create event. Please try again.');
+    }
   };
 
   return (
