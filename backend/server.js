@@ -12,20 +12,22 @@ const allowedOrigins = [
   process.env.FRONTEND_URL,
   process.env.DASHBOARD_URL,
   'http://localhost:3000',
-  'http://localhost:5173'
+  'http://localhost:5173',
+  'https://yehbon-public-school-tm8e-git-main-950322104020s-projects.vercel.app'
 ];
 
-// Middleware
-app.use(cors({
+const corsOptions = {
   origin: function (origin, callback) {
+    const requestOrigin = origin || '';
+
     // Allow server-to-server requests or local tools (like Postman)
-    if (!origin) return callback(null, true);
+    if (!requestOrigin) return callback(null, true);
 
     // Allow explicit whitelisted URLs
-    const isWhitelisted = allowedOrigins.indexOf(origin) !== -1;
+    const isWhitelisted = allowedOrigins.indexOf(requestOrigin) !== -1;
 
     // Allow standard or deep Vercel project subdomains
-    const isVercelDomain = origin.endsWith('.vercel.app') || origin.includes('.vercel.app');
+    const isVercelDomain = requestOrigin.endsWith('.vercel.app') || requestOrigin.includes('.vercel.app');
 
     if (isWhitelisted || isVercelDomain) {
       callback(null, true);
@@ -35,8 +37,13 @@ app.use(cors({
   },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
-}));
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  optionsSuccessStatus: 200
+};
+
+// Middleware
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
 app.use(express.json());
 
 // Database Connection
