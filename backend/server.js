@@ -44,15 +44,22 @@ const allowedOrigins = [
 
 app.use(cors({
   origin: function (origin, callback) {
-    // Allows requests with no origin (like mobile apps or curl requests)
+    // 1. Allow server-to-server requests or local tools (like Postman)
     if (!origin) return callback(null, true);
     
-    // Check if the origin matches our set URLs OR is a Vercel preview domain
-    if (allowedOrigins.indexOf(origin) !== -1 || origin.endsWith('.vercel.app')) {
+    // 2. Check if the origin matches explicit whitelisted URLs
+    const isWhitelisted = allowedOrigins.indexOf(origin) !== -1;
+    
+    // 3. Check if the origin is any standard or deep Vercel project subdomain
+    const isVercelDomain = origin.endsWith('.vercel.app') || origin.includes('.vercel.app');
+
+    if (isWhitelisted || isVercelDomain) {
       callback(null, true);
     } else {
-      callback(new Error('Not allowed by CORS policy'));
+      callback(new Error('Blocked by security CORS policy'));
     }
   },
-  credentials: true
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
