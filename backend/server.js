@@ -17,14 +17,15 @@ const allowedOrigins = [
 ];
 
 const corsOptions = {
-  // Dynamically mirrors the incoming request's origin (perfect for handling dynamic Vercel URLs)
-  origin: true, 
+  // Foolproof function: automatically accepts and mirrors ANY incoming frontend URL
+  origin: function (origin, callback) {
+    callback(null, true);
+  },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   optionsSuccessStatus: 200
 };
-
 // Middleware
 app.use(cors(corsOptions));
 app.use(express.json());
