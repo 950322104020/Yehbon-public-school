@@ -4,6 +4,7 @@ import api from '../utils/api';
 export default function Login({ setToken }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
 
   const handleLogin = async (e) => {
@@ -31,9 +32,12 @@ export default function Login({ setToken }) {
             <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Admin Username</label>
             <input type="text" required value={username} onChange={e => setUsername(e.target.value)} className="w-full px-4 py-3 bg-slate-900 border border-slate-700 text-slate-200 rounded-lg text-sm focus:outline-none focus:border-amber-500" placeholder="admin" />
           </div>
-          <div className="space-y-1">
+          <div className="space-y-1 relative">
             <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Security Password</label>
-            <input type="password" required value={password} onChange={e => setPassword(e.target.value)} className="w-full px-4 py-3 bg-slate-900 border border-slate-700 text-slate-200 rounded-lg text-sm focus:outline-none focus:border-amber-500" placeholder="••••••••" />
+            <input type={showPassword ? 'text' : 'password'} required value={password} onChange={e => setPassword(e.target.value)} className="w-full px-4 py-3 bg-slate-900 border border-slate-700 text-slate-200 rounded-lg text-sm focus:outline-none focus:border-amber-500" placeholder="••••••••" />
+            <button type="button" onClick={() => setShowPassword(prev => !prev)} className="absolute right-3 top-[38px] text-[10px] font-bold uppercase tracking-wider text-slate-400 hover:text-white">
+              {showPassword ? 'Hide' : 'Show'}
+            </button>
           </div>
           <button type="submit" className="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold py-3 rounded-lg text-sm uppercase tracking-wider shadow-lg transition-colors cursor-pointer">Verify & Enter Dashboard</button>
         </form>
