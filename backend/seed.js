@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
-require('dotenv').config();
+const path = require('path');
+// Ensures .env is read cleanly relative to the backend workspace root directory
+require('dotenv').config({ path: path.join(__dirname, '.env') });
 
 // Import our models
 const Notice = require('./models/Notice');
@@ -77,6 +79,10 @@ const sampleInquiries = [
 
 const seedDatabase = async () => {
   try {
+    if (!process.env.MONGO_URI) {
+      throw new Error("MONGO_URI is missing from your environment variables!");
+    }
+
     // Connect to database
     await mongoose.connect(process.env.MONGO_URI);
     console.log("Connected to MongoDB Atlas for seeding...");
@@ -93,25 +99,17 @@ const seedDatabase = async () => {
     await Inquiry.insertMany(sampleInquiries);
     console.log("Notices, Gallery, and Inquiries collections successfully seeded!");
 
-    // Optional: Seed or normalize the default Admin account credentials
+    // Seed or normalize the default Admin account credentials safely
     const existingAdmin = await Admin.findOne({ username: "TerryMize" });
     if (!existingAdmin) {
-      const [anyAdmin] = await Admin.find().limit(1);
-      if (anyAdmin) {
-        anyAdmin.username = "TerryMize";
-        anyAdmin.password = "Terry@95822"; // pre-save hook will hash this password
-        await anyAdmin.save();
-        console.log("Existing admin account updated -> User: TerryMize | Pass: Terry@95822");
-      } else {
-        const defaultAdmin = new Admin({
-          username: "TerryMize",
-          password: "Terry@95822" // The pre-save hook in Admin.js handles the hashing
-        });
-        await defaultAdmin.save();
-        console.log("Default admin account created -> User: TerryMize | Pass: Terry@95822");
-      }
+      const defaultAdmin = new Admin({
+        username: "TerryMize",
+        password: "Terry@95822" // Pre-save hook hashes this password automatically
+      });
+      await defaultAdmin.save();
+      console.log("Default admin account created -> User: TerryMize | Pass: Terry@95822");
     } else {
-      console.log("Admin profile TerryMize already exists; skipping default credential injection.");
+      console.log("Admin profile TerryMize already exists; skipping duplicate account injection.");
     }
 
     console.log("Data seeding completely successful.");
