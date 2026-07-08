@@ -11,7 +11,7 @@ export default function Login({ setToken }) {
     e.preventDefault();
     setError('');
     try {
-      const res = await api.post('/api/auth/login', { username, password });
+      const res = await api.post('/auth/login', { username, password });
       localStorage.setItem('adminToken', res.data.token);
       setToken(res.data.token);
     } catch (err) {
