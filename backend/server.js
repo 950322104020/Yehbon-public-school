@@ -9,20 +9,22 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 
-const corsOptions = {
-  origin: function (origin, callback) {
-    // Allows server-to-server requests or tools like Postman
-    if (!origin) return callback(null, true);
-    // Explicitly approve the incoming origin automatically
-    callback(null, true);
-  },
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  optionsSuccessStatus: 200
-};
 app.use((req, res, next) => {
-  console.log(req.method, req.originalUrl);
+  const origin = req.headers.origin;
+  console.log(`[CORS DEBUG] Incoming Request: ${req.method} from Origin: ${origin} to Path: ${req.url}`);
+  
+
+  if (origin) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  }
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+
+
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(200);
+  }
   next();
 });
 // Global Middleware Setup
