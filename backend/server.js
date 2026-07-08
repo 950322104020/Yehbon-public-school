@@ -48,7 +48,11 @@ app.get('/', (req, res) => {
   res.send("Yehbon Public School API Running...");
 });
 
-// Boot Server Engine
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(PORT, () => {
+    console.log(`Server running locally on port ${PORT}`);
+  });
+}
+
+module.exports = app;
