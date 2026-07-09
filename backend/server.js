@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const cookieParser = require('cookie-parser'); // Add near the top
 require('dotenv').config();
 const dns = require('dns');
 dns.setServers(["1.1.1.1", "8.8.8.8"]);
@@ -30,7 +31,8 @@ app.use((req, res, next) => {
 
 // Global Request Middleware Setup
 app.use(express.json());
-
+app.use(express.json());
+app.use(cookieParser());
 // Database Connection
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB Atlas connected successfully"))
