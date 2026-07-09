@@ -16,13 +16,20 @@ const api = axios.create({
 
 // Foolproof Interceptor: Automatically collapses duplicate /api/api/ paths
 api.interceptors.request.use((config) => {
-  if (config.url && config.url.startsWith('/api')) {
-    // If the component requests '/api/notices', remove the duplicate prefix
-    config.url = config.url.replace(/^\/api/, '');
+  if (config.url) {
+    let cleanUrl = config.url.replace(/^\//, '');
+    if (cleanUrl.startsWith('api/')) {
+      cleanUrl = cleanUrl.replace(/^api\//, '');
+    }
+    config.url = '/' + cleanUrl;
+  }
+  const token = localStorage.getItem('adminToken');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
   }
   return config;
 }, (error) => {
-  return Promise.all([Promise.reject(error)]);
+ return Promise.reject(error);
 });
 
 export default api;
