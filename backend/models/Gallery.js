@@ -6,4 +6,5 @@ const GallerySchema = new mongoose.Schema({
   category: { type: String, default: 'Campus' }
 }, { timestamps: true });
 
-module.exports = mongoose.model('Gallery', GallerySchema);
+
+module.exports = mongoose.models.Gallery || mongoose.model('Gallery', GallerySchema);

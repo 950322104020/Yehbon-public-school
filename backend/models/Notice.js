@@ -7,4 +7,4 @@ const NoticeSchema = new mongoose.Schema({
   category: { type: String, enum: ['General', 'Academic', 'Admission', 'Exam'], default: 'General' }
 }, { timestamps: true });
 
-module.exports = mongoose.model('Notice', NoticeSchema);
+module.exports = mongoose.models.Notice || mongoose.model('Notice', NoticeSchema);

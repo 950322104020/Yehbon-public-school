@@ -20,4 +20,4 @@ AdminSchema.pre('save', async function () {
   this.password = await bcrypt.hash(this.password, salt);
 });
 
-module.exports = mongoose.model('Admin', AdminSchema);
+module.exports = mongoose.models.Admin || mongoose.model('Admin', AdminSchema)
