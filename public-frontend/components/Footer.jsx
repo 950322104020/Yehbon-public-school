@@ -9,7 +9,7 @@ export default function Footer() {
         <div>
           <h3 className="text-white text-lg font-bold mb-4 tracking-wider uppercase">Yehbon Public School</h3>
           <p className="text-sm text-slate-400 leading-relaxed">
-            Nurturing young intellects, unlocking latent secondary abilities, and architecting elite educational paths for tomorrow's structural industry leaders since 2010.
+            Nurturing young intellects, unlocking latent secondary abilities, and architecting elite educational paths for tomorrow's structural industry leaders since 2009.
           </p>
         </div>
 
@@ -27,9 +27,9 @@ export default function Footer() {
         <div>
           <h3 className="text-white text-lg font-bold mb-4 tracking-wider uppercase">Contact Information</h3>
           <ul className="space-y-2 text-sm text-slate-400">
-            <li>📍 Plot No. 12, Knowledge Park, Noida, UP</li>
-            <li>📞 +91 98765 43210</li>
-            <li>✉️ info@yehbonpublicschool.edu</li>
+            <li>Village : Bhooda,Sector:81,Phase:2,Noida(UP)</li>
+            <li>📞 +91 9582271412</li>
+            <li>✉️ terrymize@gmail.com</li>
           </ul>
         </div>
 

@@ -148,7 +148,7 @@ export default function HomePage() {
             </p>
             <div>
               <h4 className="font-bold text-slate-900 text-lg">MR.Terry Mize</h4>
-              <p className="text-xs font-semibold text-amber-600 uppercase tracking-widest">Principal & Academic Chair, Ph.D. Education</p>
+              <p className="text-xs font-semibold text-amber-600 uppercase tracking-widest">Principal & Academic Chair,MA in English Literature</p>
             </div>
           </div>
         </div>
