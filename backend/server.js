@@ -36,15 +36,26 @@ const connectDB = async (req, res, next) => {
 // Global Edge CORS Middleware
 app.use((req, res, next) => {
   const origin = req.headers.origin;
-  if (origin) {
+  
+  // Whitelist your domain variants safely
+  const allowedOrigins = [
+    'https://www.yehbonpublicschool.in',
+    'https://yehbonpublicschool.in',
+    'http://localhost:3000'
+  ];
+
+  if (origin && (allowedOrigins.includes(origin) || origin.endsWith('.vercel.app'))) {
     res.setHeader('Access-Control-Allow-Origin', origin);
   }
+  
   res.setHeader('Access-Control-Allow-Credentials', 'true');
   res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,PATCH,OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, Authorization');
 
+  // Terminate OPTIONS requests instantly right here
   if (req.method === 'OPTIONS') {
-    return res.sendStatus(200);
+    res.status(200).end();
+    return;
   }
   next();
 });
