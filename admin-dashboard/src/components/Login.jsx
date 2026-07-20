@@ -12,8 +12,10 @@ export default function Login({ setToken }) {
     setError('');
     try {
       const res = await api.post('/auth/login', { username, password });
-      localStorage.setItem('adminToken', res.data.token);
-      setToken(res.data.token);
+      if (res.data && res.data.token) {
+        localStorage.setItem('adminToken', res.data.token);
+        setToken(res.data.token);
+      }
     } catch (err) {
       setError(err.response?.data?.message || 'Invalid admin credentials');
     }

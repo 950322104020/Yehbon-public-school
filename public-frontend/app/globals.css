@@ -1,7 +1,33 @@
 @import "tailwindcss";
 
-@layer base {
-  html, body {
-    @apply m-0 p-0 overflow-x-hidden box-border bg-slate-50 text-slate-800 antialiased;
+/* 🎨 THE ELITE INTERNATIONAL ACADEMY COLOR SYSTEM */
+@theme {
+  --color-school-primary: #064e3b;       /* Deep Emerald Green (Headers, Prestige elements) */
+  --color-school-primary-hover: #047857; /* Active Mint Emerald Green */
+  --color-school-primary-dark: #022c22;  /* Rich Forest Black (Footer & Hero textures) */
+  
+  --color-school-accent: #f59e0b;        /* Warm Amber Gold (CTAs, highlighters) */
+  --color-school-accent-hover: #d97706;  /* Deep Amber Amber Hover */
+
+  /* Surface System Transformation */
+  --color-layout-bg: #fdfbf7;            /* Warm Ivory Cream Linen background (Looks high-end) */
+  --color-card-bg: #ffffff;              /* Crisp White for info plates */
+  --color-text-main: #111827;            /* Deep Obsidian Charcoal for ultra-clear reading */
+  --color-text-muted: #4b5563;           /* Muted Slate Gray for details */
+}
+
+/* 🔄 RUNNING SOCIAL FOOTER KEYFRAMES */
+@keyframes slideSocial {
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-50%, 0, 0); }
+}
+
+@utility animate-social-slide {
+  display: flex;
+  width: max-content;
+  animation: slideSocial 22s linear infinite;
+  
+  &:hover {
+    animation-play-state: paused;
   }
 }
